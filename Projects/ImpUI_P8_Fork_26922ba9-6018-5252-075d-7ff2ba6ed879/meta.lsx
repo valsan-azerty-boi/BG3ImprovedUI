@@ -4,8 +4,8 @@
     <region id="MetaData">
         <node id="root">
             <attribute id="GameProject" type="LSString" value=""/>
-            <attribute id="Module" type="LSString" value="9833971e-31b4-6970-d687-ac677dce179e"/>
-            <attribute id="Name" type="LSString" value="ImpUI_P8"/>
+            <attribute id="Module" type="LSString" value="26922ba9-6018-5252-075d-7ff2ba6ed879"/>
+            <attribute id="Name" type="LSString" value="ImpUI_P8_Fork"/>
             <attribute id="UUID" type="LSString" value="e8ed3bf7-6db0-b8fa-d241-4a4f7b91a6e6"/>
             <attribute id="UpdatedDependencies" type="bool" value="true"/>
             <children>
