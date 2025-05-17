@@ -1,5 +1,7 @@
 # ImpUI_P8_Fork
-[ImpUI_P8_Fork](https://github.com/valsan-azerty-boi/BG3ImprovedUI) is a fork of [ImpUI (ImprovedUI)](https://github.com/TheRealDjmr/BG3ImprovedUI) intended exclusively for the BG3 patch 8. Authorized by Djmr and open to contributions.
+[ImpUI_P8_Fork](https://github.com/valsan-azerty-boi/BG3ImprovedUI) is a fork of [ImpUI (ImprovedUI)](https://github.com/TheRealDjmr/BG3ImprovedUI) intended exclusively for the BG3 patch 8. Authorized by Djmr and [open to contributions](https://github.com/valsan-azerty-boi/BG3ImprovedUI).
+
+This mod is in BETA testing phase.
 
 ### Disclaimers
 The contributors to this mod don't owe you anything; they do this mostly in their spare time, and they're tearing their hair out trying to find every possible solution to your problems. Please be kind to them.
