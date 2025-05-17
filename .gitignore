@@ -8,11 +8,11 @@ story_orphanqueries_found.txt
 # Various            #
 ######################
 *.bak
-ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Projects/*
-ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Mods/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/*.png
-ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Public/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Lists/*
-ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Public/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Progressions/*
-ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Mods/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Story/RawFiles/Goals/*
+Mods/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/*.png
+Mods/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Story/RawFiles/Goals/*
+Public/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Lists/*
+Public/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/Progressions/*
+Projects/ImpUI_26922ba9-6018-5252-075d-7ff2ba6ed879/*
 
 # Editor files       #
 ######################

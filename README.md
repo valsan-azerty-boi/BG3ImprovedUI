@@ -1,24 +1,20 @@
+# ImpUI_P8_Fork
+ImpUI_P8_Fork is a fork of ImpUI (ImprovedUI) intended exclusively for the BG3 patch 8. Authorized by Djmr and open to contributions.
 
-<p align="middle">
-  <img src="https://i.imgur.com/6Zso95t.png"> 
-</p>
+## Attribution
+ImpUI_P8_Fork is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.
 
-### Disclaimer
-There are no plans to actively maintain the project.
-Feel free to reach out if you want to work on ImpUI or any other UI mods
+ImpUI_P8_Fork is a mod for Baldur's Gate 3, a game developed and published by Larian Studios. This mod is not affiliated with, endorsed by, or approved by Larian Studios. Baldur’s Gate 3 and all related assets, trademarks, and copyrights are the property of Larian Studios.
 
-### Description
-This mod is aimed at making changes to the overall user interface to improve usability as well as opening options to more potential mods.
+Original ImpUI mod by Djmr, AlanaSP, ShinyHobo & Zee
 
-### Patch 8 CC fixes
-#### Features
-- CC/Level up Layout tweaks: Passive and Spell selection to Races
-- Respec tweaks: Race and Background tabs, including racial passives that can be unselected then changed, and racial spells that can be switched
-- CC/Respec tweaks: Icons for modded backgrounds
 
-#### General patch 8 modding recommendations
+### Disclaimers
+- This mod should not be set as a strict dependency in a mod meta file, the dependency should not be hard-coded in the meta file
+- If a mod have a strict dependency on load to "ImpUI (ImprovedUI)" mod, the responsability is to the mod author to delete this strict dependency, the dependency should not be hard-coded in the meta file
+- If a mod have a strict dependency on load to "ImprovedUI Assets" mod, the responsability is to the mod author to delete this strict dependency, the dependency should not be hard-coded in the meta file
+
 In general, all these steps can also be applied if a future patch or hotfix comes out; these are reflexes to have
-
 - PC: Don't use multiple mod managers to manage your mods, choose one and stick with it
 - PC: If you are using an external mod manager such as BG3MM, do not skip any updates to your mod manager or you risk having broken load orders and broken `modsettings.lsx` files
 - PC: Vortex mod manager is not recommanded
@@ -32,12 +28,3 @@ In general, all these steps can also be applied if a future patch or hotfix come
 - All Platforms: Do not use old saves from before patch 8, more specifically modded saves, start with a fresh new playthrough once you have reinstalled ImpUI and your mods for Patch 8
 - All Platforms: Do not use UI mods that have not been updated for Patch 8 in addition to ImpUI
 - All Platforms: Do not update your mods in the middle of a playthrough
-
-### Discord
-Feel free to join the [Larian Discord](https://discord.com/invite/larianstudios) server and discuss in the BG3 Modding Channels
-
-### Attribution
-- [Baldur's Gate 3](https://store.steampowered.com/app/1086940/Baldurs_Gate_3/), a game by [Larian Studios](http://larian.com/)
-- Initial readme file generously donated by Zerd; check out their project here, [DnD Rebalancing](https://github.com/ZerdBG3/DnD-Rebalancing/)  
-
-The latest mod updates will be available from GitHub first - https://github.com/TheRealDjmr/BG3ImprovedUI/releases
