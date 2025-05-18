@@ -1,0 +1,225 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+					xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+					xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					xmlns:System="clr-namespace:System;assembly=mscorlib"
+					xmlns:ls="clr-namespace:ls;assembly=Code"
+					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
+					mc:Ignorable="d">
+
+	<ControlTemplate x:Key="overpanelSkillsTemplate">
+		<ls:LSNineSliceImage Padding="0,20,0,60" Slices="64,300,64,100" ImageSource="pack://application:,,,/Core;component/Assets/CC/overPane_appearance.png" Width="820" MinHeight="1460">
+
+			<StackPanel>
+				<StackPanel.Resources>
+					<DataTemplate x:Key="AllSkillTemplate">
+						<Grid x:Name="checkBox" Visibility="Hidden" Height="{DynamicResource rowHeight}" Background="Transparent">
+							<b:Interaction.Triggers>
+								<b:EventTrigger EventName="MouseLeftButtonUp">
+									<b:InvokeCommandAction Command="{Binding DataContext.ToggleSkill, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" />
+								</b:EventTrigger>
+								<b:EventTrigger EventName="MouseLeftButtonDown">
+									<ls:LSPlaySound Sound="UI_Shared_Secondary_Press"/>
+								</b:EventTrigger>
+								<b:EventTrigger EventName="MouseEnter">
+									<ls:LSPlaySound Sound="UI_Shared_Hover"/>
+								</b:EventTrigger>
+							</b:Interaction.Triggers>
+
+							<Image x:Name="checkHolder" Source="pack://application:,,,/Core;component/Assets/CC/checkHolder_inactive_d.png" Stretch="None"/>
+							<Image x:Name="checkMark" Stretch="None"/>
+						</Grid>
+						<DataTemplate.Triggers>
+
+							<DataTrigger Binding="{Binding Selected}" Value="True">
+								<Setter TargetName="checkMark" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkMark_skills_selected.png"/>
+							</DataTrigger>
+
+							<DataTrigger Binding="{Binding Enabled}" Value="True">
+								<Setter TargetName="checkHolder" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkHolder_active_d.png"/>
+								<Setter TargetName="checkBox" Property="Visibility" Value="Visible"/>
+							</DataTrigger>
+
+							<DataTrigger Binding="{Binding SkillSource}" Value="Background">
+								<Setter TargetName="checkHolder" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkHolder_inactive_d.png"/>
+								<Setter TargetName="checkMark" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkMark_skills_selectedBefore.png"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding SkillSource}" Value="Race">
+								<Setter TargetName="checkHolder" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkHolder_inactive_d.png"/>
+								<Setter TargetName="checkMark" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkMark_skills_selectedBefore.png"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding SkillSource}" Value="Class">
+								<Setter TargetName="checkHolder" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkHolder_inactive_d.png"/>
+								<Setter TargetName="checkMark" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkMark_skills_selectedBefore.png"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding SkillSource}" Value="Passive">
+								<Setter TargetName="checkHolder" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkHolder_inactive_d.png"/>
+								<Setter TargetName="checkMark" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkMark_skills_selectedBefore.png"/>
+							</DataTrigger>
+
+							<MultiDataTrigger>
+								<MultiDataTrigger.Conditions>
+									<Condition Binding="{Binding IsMouseOver, ElementName=checkBox}" Value="True"/>
+									<Condition Binding="{Binding Opacity, ElementName=checkBox}" Value="1"/>
+								</MultiDataTrigger.Conditions>
+								<Setter TargetName="checkHolder" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/checkHolder_active_h.png"/>
+							</MultiDataTrigger>
+
+						</DataTemplate.Triggers>
+					</DataTemplate>
+
+				</StackPanel.Resources>
+				<TextBlock x:Name="skillsTitle" ls:TextBlockFormatter.SourceText="{Binding Source=h12abe296ga0fbg44feg9451gb10a0bf92acb, Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}" Margin="0,20,0,0"/>
+
+				<TextBlock x:Name="proficiencyDescription" ls:TextBlockFormatter.SourceText="{Binding Source=h50102d2egd75ag447dgba88gf64cd903a457, Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelDescriptionText}" Margin="40,20,40,0"/>
+
+				<Grid x:Name="skillsSelectionTable" Margin="0,20,0,0" HorizontalAlignment="Center">
+
+					<Grid.Resources>
+						<System:Single x:Key="rowHeight">56</System:Single>
+					</Grid.Resources>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<ItemsControl x:Name="skillInfo" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding SortedItems, ElementName=SortedRaceSkills}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Grid MinWidth="350" Height="{StaticResource rowHeight}" HorizontalAlignment="Left">
+									<Image x:Name="source" Stretch="None" HorizontalAlignment="Left">
+										<Image.ToolTip>
+											<ls:LSTooltip x:Name="sourceTooltip" Content=""/>
+										</Image.ToolTip>
+									</Image>
+									<Control x:Name="text" Template="{StaticResource SkillDisplayName}" FontSize="{StaticResource ScaledMediumFontSize}" Foreground="{StaticResource CCTextNormal}" VerticalAlignment="Center" Margin="70,0,0,0">
+										<Control.ToolTip>
+											<ls:LSTooltip Content="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+										</Control.ToolTip>
+									</Control>
+								</Grid>
+								<DataTemplate.Triggers>
+									<DataTrigger Binding="{Binding SkillSource}" Value="Background">
+										<Setter TargetName="source" Property="Source" Value="pack://application:,,,/Core;component/Assets/CC/ico_origin.png"/>
+										<Setter TargetName="sourceTooltip" Property="Content" Value="{Binding Source='hedd9548eg9694g41d4g85a5gcca6ecdfdea8', Converter={StaticResource TranslatedStringConverter}}"/>
+										<Setter TargetName="text" Property="Foreground" Value="{StaticResource CCTextLight}"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding SkillSource}" Value="Race">
+										<Setter TargetName="source" Property="Source" Value="{StaticResource IconRace}"/>
+										<Setter TargetName="sourceTooltip" Property="Content" Value="{Binding Source='h2b695f65g9317g4a75g9ae2g7f45350c3bfc', Converter={StaticResource TranslatedStringConverter}}"/>
+										<Setter TargetName="text" Property="Foreground" Value="{StaticResource CCTextLight}"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding SkillSource}" Value="Class">
+										<Setter TargetName="source" Property="Source" Value="{StaticResource IconClass}"/>
+										<Setter TargetName="sourceTooltip" Property="Content" Value="{Binding Source='h4f84523ag0b42g41f8gafcfgb25f74fd1b74', Converter={StaticResource TranslatedStringConverter}}"/>
+										<Setter TargetName="text" Property="Foreground" Value="{StaticResource CCTextLight}"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding SkillSource}" Value="Passive">
+										<Setter TargetName="source" Property="Source" Value="{StaticResource IconClass}"/>
+										<Setter TargetName="sourceTooltip" Property="Content" Value="{Binding Source='h099ebd82g6ea7g43b7gbf0fg69e32653f322', Converter={StaticResource TranslatedStringConverter}}"/>
+										<Setter TargetName="text" Property="Foreground" Value="{StaticResource CCTextLight}"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding SkillSource}" Value="RaceSelector">
+										<Setter TargetName="source" Property="Source" Value="{StaticResource IconRace}"/>
+										<Setter TargetName="sourceTooltip" Property="Content" Value="{Binding Source='h2b695f65g9317g4a75g9ae2g7f45350c3bfc', Converter={StaticResource TranslatedStringConverter}}"/>
+										<Setter TargetName="text" Property="Foreground" Value="{StaticResource CCTextPrimary}"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding SkillSource}" Value="ClassSelector">
+										<Setter TargetName="source" Property="Source" Value="{StaticResource IconClass}"/>
+										<Setter TargetName="sourceTooltip" Property="Content" Value="{Binding Source='h4f84523ag0b42g41f8gafcfgb25f74fd1b74', Converter={StaticResource TranslatedStringConverter}}"/>
+										<Setter TargetName="text" Property="Foreground" Value="{StaticResource CCTextPrimary}"/>
+									</DataTrigger>
+
+								</DataTemplate.Triggers>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+
+					<ItemsControl x:Name="rollBonuses" Grid.Row="1" Grid.Column="1" Width="60" ItemsSource="{Binding SortedItems, ElementName=SortedRaceSkills}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Grid Height="{StaticResource rowHeight}">
+									<TextBlock Text="{Binding Value, StringFormat={}{0:+#;-#;+0}}" FontSize="{StaticResource ScaledMediumFontSize}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+								</Grid>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+
+					<StackPanel x:Name="selectableRaceSkills" Grid.Row="0" Grid.Column="2" Width="100" Visibility="{Binding AllSkills.RaceProficientSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}">
+						<StackPanel.ToolTip>
+							<ls:LSTooltip>
+								<StackPanel>
+									<TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h5cab4ab6g7b46g46cegb82fg3ea721099318', Converter={StaticResource TranslatedStringConverter}}" HorizontalAlignment="Center" FontSize="{StaticResource ScaledLargeFontSize}"/>
+									<TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='hda608d66g306eg4739g8ea2g974918945bb8', Converter={StaticResource TranslatedStringConverter}}" TextWrapping="Wrap"/>
+								</StackPanel>
+							</ls:LSTooltip>
+						</StackPanel.ToolTip>
+						<Image Source="{StaticResource IconRace}" Stretch="None"/>
+						<TextBlock x:Name="RaceSkillsTitle" HorizontalAlignment="Center">
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0}/{1}">
+									<Binding Path="AllSkills.RaceProficientSkills.SelectedSkillCount"/>
+									<Binding Path="AllSkills.RaceProficientSkills.MaxSelectedSkillCount"/>
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+					</StackPanel>
+					<ItemsControl x:Name="selectableRaceCheckboxes" Grid.Row="1" Grid.Column="2" Width="100" ItemsSource="{Binding SortedItems, ElementName=SortedRaceSkills}" ItemTemplate="{StaticResource AllSkillTemplate}" Tag="Race" Visibility="{Binding RaceSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+					<StackPanel x:Name="selectableClassSkills" Grid.Row="0" Grid.Column="3" Width="100" Visibility="{Binding AllSkills.ClassProficientSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}">
+						<StackPanel.ToolTip>
+							<ls:LSTooltip>
+								<StackPanel>
+									<TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h5cab4ab6g7b46g46cegb82fg3ea721099318', Converter={StaticResource TranslatedStringConverter}}" HorizontalAlignment="Center" FontSize="{StaticResource ScaledLargeFontSize}"/>
+									<TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='hda608d66g306eg4739g8ea2g974918945bb8', Converter={StaticResource TranslatedStringConverter}}" TextWrapping="Wrap"/>
+								</StackPanel>
+							</ls:LSTooltip>
+						</StackPanel.ToolTip>
+						<Image Source="{StaticResource IconClass}" Stretch="None"/>
+						<TextBlock x:Name="ClassSkillsTitle" HorizontalAlignment="Center" FontSize="{StaticResource ScaledDefaultFontSize}">
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0}/{1}">
+									<Binding Path="AllSkills.ClassProficientSkills.SelectedSkillCount"/>
+									<Binding Path="AllSkills.ClassProficientSkills.MaxSelectedSkillCount"/>
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+					</StackPanel>
+					<ItemsControl Grid.Row="1" Grid.Column="3" Width="100" ItemsSource="{Binding SortedItems, ElementName=SortedClassSkills}" ItemTemplate="{StaticResource AllSkillTemplate}" Tag="Class" Visibility="{Binding AllSkills.ClassProficientSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+					<StackPanel x:Name="selectableExpertiseSkills" Grid.Row="0" Grid.Column="4" Width="100" Visibility="{Binding AllSkills.ExpertiseSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}" >
+						<StackPanel.ToolTip>
+							<ls:LSTooltip>
+								<StackPanel>
+									<TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h601ff4c6g67b8g4f32gaaf7g8b29d6daa426', Converter={StaticResource TranslatedStringConverter}}" HorizontalAlignment="Center" FontSize="{StaticResource ScaledLargeFontSize}"/>
+									<TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='hb7bf72ebgcd1ag40fbg9f1eg85d9a5853d4d', Converter={StaticResource TranslatedStringConverter}}" TextWrapping="Wrap"/>
+								</StackPanel>
+							</ls:LSTooltip>
+						</StackPanel.ToolTip>
+						<Image Source="pack://application:,,,/Core;component/Assets/CharacterCreation/ico_expertise.png" Width="64" Height="64" Stretch="None"/>
+						<TextBlock x:Name="ExpertiseSkillsTitle" HorizontalAlignment="Center" FontSize="{StaticResource ScaledDefaultFontSize}">
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0}/{1}">
+									<Binding Path="AllSkills.ExpertiseSkills.SelectedSkillCount"/>
+									<Binding Path="AllSkills.ExpertiseSkills.MaxSelectedSkillCount"/>
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+					</StackPanel>
+					<ItemsControl Grid.Row="1" Grid.Column="4" ItemsSource="{Binding SortedItems, ElementName=SortedExpertiseSkills}" ItemTemplate="{StaticResource AllSkillTemplate}" Tag="Expertise" Visibility="{Binding AllSkills.ExpertiseSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+				</Grid>
+			</StackPanel>
+		</ls:LSNineSliceImage>
+
+	</ControlTemplate>
+
+</ResourceDictionary>

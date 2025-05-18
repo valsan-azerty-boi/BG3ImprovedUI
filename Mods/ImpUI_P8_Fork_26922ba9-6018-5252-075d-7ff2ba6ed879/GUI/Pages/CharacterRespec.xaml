@@ -12,14 +12,13 @@
     d:DesignHeight="2160" d:DesignWidth="3840"
     ls:UIWidget.ContextName="CharacterCreation">
 
-    <!-- <ls:UIWidget.Resources>
+    <ls:UIWidget.Resources>
         <ResourceDictionary>
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Library/CCLib_k.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </ls:UIWidget.Resources> -->
+    </ls:UIWidget.Resources>
 
     <b:Interaction.Behaviors>
 

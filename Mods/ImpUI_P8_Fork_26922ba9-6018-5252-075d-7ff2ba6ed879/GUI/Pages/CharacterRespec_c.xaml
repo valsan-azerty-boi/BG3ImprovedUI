@@ -341,6 +341,9 @@
                                         <!-- MOD END -->
 
                                         <ListBoxItem x:Name="abilityTab" Tag="ability"/>
+                                        <!-- MOD START -->
+                                        <ListBoxItem x:Name="raceSkillsTab" Tag="raceskills" Visibility="{Binding AllSkills.RaceProficientSkills.MaxSelectedSkillCount, Converter={StaticResource GreaterThanConverter}}"/>
+                                        <!-- MOD END -->
                                         <ListBoxItem x:Name="skillsTab" Tag="skills" Visibility="{Binding AllSkills.ClassProficientSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}"/>
                                         <ListBoxItem x:Name="expertiseTab" Tag="expertise" Visibility="{Binding AllSkills.ExpertiseSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}"/>
                                         <ListBoxItem x:Name="namingTab" Tag="naming"/>
@@ -456,6 +459,16 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="nextButton" Property="IsEnabled" Value="False"/>
                         </MultiDataTrigger>
+
+                        <!-- MOD START select human proficiency -->
+                        <!-- <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="raceskills"/>
+                                <Condition Binding="{Binding Validity.RacialSelectors.SkillProficiencySelectors}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="nextButton" Property="IsEnabled" Value="False"/>
+                        </MultiDataTrigger> -->
+                        <!-- MOD END -->
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -1044,6 +1057,55 @@
                             </Setter>
                         </DataTrigger>
 
+                        <!-- MOD START select human proficiency -->
+                        <DataTrigger Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="raceskills">
+                            <Setter TargetName="gameplayPanel" Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <Control Template="{StaticResource setGameplayCameraOffsets}"/>
+
+                                            <Control Template="{StaticResource raceSkillProficiencyPanelTemplate}"/>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+
+                        <!-- <DataTrigger Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="raceskills">
+                            <Setter TargetName="gameplayPanel" Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <b:Interaction.Triggers>
+                                                <b:EventTrigger EventName="Loaded">
+                                                    <b:InvokeCommandAction Command="{Binding EnableTooltipOnUIElementCommand, ElementName=CharacterRespec_c}"/>
+                                                </b:EventTrigger>
+                                            </b:Interaction.Triggers>
+                                            <Control Template="{StaticResource setOverviewCamera}"/>
+                                            
+                                            <Control Template="{StaticResource skillsSelectionTemplate}" DataContext="{Binding AllSkills.RaceProficientSkills}">
+                                                <Control.Resources>
+                                                    <ControlTemplate x:Key="skillsSelectionHeader">
+                                                        <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h6df70972gfd55g4f29g9431g0a1530858ccf', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
+                                                    </ControlTemplate>
+                                                    <ControlTemplate x:Key="skillsSelectionDescription">
+                                                        <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h50102d2egd75ag447dgba88gf64cd903a457', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelDescriptionText}" MaxWidth="1100" TextWrapping="Wrap"/>
+                                                    </ControlTemplate>
+                                                    <ControlTemplate x:Key="skillsSelectedLabel">
+                                                        <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h8931179bg03ebg45bdg8dbbg824c1178ccbd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource SkillsTitleStyle}"/>
+                                                    </ControlTemplate>
+                                                    <ControlTemplate x:Key="selectableSkills">
+                                                        <ItemsControl ItemsSource="{Binding SortedItems, ElementName=SortedRaceSkills}" ItemTemplate="{StaticResource selectableSkillTemplate}"/>
+                                                    </ControlTemplate>
+                                                </Control.Resources>
+                                            </Control>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger> -->
+                        <!-- MOD END -->
 
                         <DataTrigger Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="skills">
                             <Setter TargetName="gameplayPanel" Property="Template">
