@@ -1309,8 +1309,6 @@
 
                                                     </StackPanel>
 
-                                                    <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
-
                                                         <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
 
                                                         <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
@@ -1326,8 +1324,6 @@
 
                                                             </StackPanel>
                                                         </ScrollViewer>
-
-                                                    </StackPanel>
 
                                                 </DockPanel>
 
