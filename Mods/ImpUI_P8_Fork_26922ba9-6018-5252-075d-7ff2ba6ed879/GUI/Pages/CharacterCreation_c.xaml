@@ -29,6 +29,8 @@
               <ResourceDictionary Source="../Library/CC_SubRaceControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_ClassControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_SubClassControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_DeityControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_BackgroundControls_c.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Message box to ensure user wants to activate tutorials -->
@@ -1195,29 +1197,8 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                                                        <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                                                    <Control Template="{StaticResource deitySelectionTemplate}"/>
 
-                                                            <ListBox x:Name="deityCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableDeities}" SelectedItem="{Binding SelectedDeity}">
-                                                                <ListBox.ItemTemplate>
-                                                                    <DataTemplate>
-                                                                        <Rectangle x:Name="deityIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource DeityIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                                                                        <DataTemplate.Triggers>
-                                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                                <Setter TargetName="deityIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                                <Setter TargetName="deityIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                                <Setter TargetName="deityIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                                                                <Setter TargetName="deityIcon" Property="Opacity" Value="0.8"/>
-                                                                            </DataTrigger>
-                                                                        </DataTemplate.Triggers>
-                                                                    </DataTemplate>
-                                                                </ListBox.ItemTemplate>
-                                                            </ListBox>
-
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
-
-                                                        </StackPanel>
-                                                    </ScrollViewer>
                                                 </StackPanel>
 
                                             </ControlTemplate>
@@ -1245,7 +1226,7 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <StackPanel>
+                                              <DockPanel>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
@@ -1254,36 +1235,13 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <ListBox x:Name="backgroundCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableBackgrounds}" SelectedItem="{Binding SelectedBackground}">
-                                                        <ListBox.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Rectangle x:Name="backgroundIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource BackgroundIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                                                                <DataTemplate.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                        <Setter TargetName="backgroundIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                        <Setter TargetName="backgroundIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                        <Setter TargetName="backgroundIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                                                        <Setter TargetName="backgroundIcon" Property="Opacity" Value="0.8"/>
-                                                                    </DataTrigger>
-                                                                </DataTemplate.Triggers>
-                                                            </DataTemplate>
-                                                        </ListBox.ItemTemplate>
-                                                    </ListBox>
+                                                    <StackPanel x:Name="backgroundCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                                                        <Control Template="{StaticResource backgroundSelectionTemplate}"/>
+                                                    </StackPanel>
 
-                                                    <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                                                        <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                                                    <Control Template="{StaticResource backgroundProgressionsTemplate}"/>
 
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding DummyCharacter.Stats.BackgroundDescription}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
-
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
-
-                                                            <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.BackgroundProgression}" HorizontalAlignment="Center"/>
-
-                                                        </StackPanel>
-                                                    </ScrollViewer>
-
-                                                </StackPanel>
-
+                                                </DockPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
