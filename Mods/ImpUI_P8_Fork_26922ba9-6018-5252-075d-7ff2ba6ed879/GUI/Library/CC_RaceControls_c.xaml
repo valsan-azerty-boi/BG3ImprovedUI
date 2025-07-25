@@ -1,0 +1,60 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+					xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+					xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					xmlns:System="clr-namespace:System;assembly=mscorlib"
+					xmlns:ls="clr-namespace:ls;assembly=Code"
+					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
+					mc:Ignorable="d">
+
+      <ControlTemplate x:Key="raceSelectionTemplate" DockPanel="{ Binding DockPanel }">
+
+        <StackPanel x:Name="raceCarouselAndDescription_inner" Orientation="Horizontal" DockPanel.Dock="Top">
+
+              <ListBox x:Name="raceCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableRaces}" SelectedItem="{Binding SelectedRace}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle x:Name="raceIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource RaceIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}" Opacity="1"/>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
+                                <Setter TargetName="raceIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
+                                <Setter TargetName="raceIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
+                                <Setter TargetName="raceIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
+                                <Setter TargetName="raceIcon" Property="Opacity" Value="0.8"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
+                <TextBlock ls:TextBlockFormatter.SourceText="{Binding InfoRaceDescription}" Style="{StaticResource CarouselSideDescriptionText}"/>
+            </ContentControl>
+
+        </StackPanel>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="raceProgressionsTemplate">
+
+        <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+
+        <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
+            <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+
+                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=RaceProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RaceProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=RaceSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=RaceSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+                <!-- MOD START - Racial passive selection -->
+                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=RacePassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
+                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=RacePassiveSelectors}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RacePassiveSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
+                <!-- MOD END -->
+
+                <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.RaceProgression}" HorizontalAlignment="Center"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </ControlTemplate>
+</ResourceDictionary>

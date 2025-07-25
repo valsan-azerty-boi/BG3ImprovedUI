@@ -1,0 +1,47 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+					xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+					xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					xmlns:System="clr-namespace:System;assembly=mscorlib"
+					xmlns:ls="clr-namespace:ls;assembly=Code"
+					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
+					mc:Ignorable="d">
+
+      <ControlTemplate x:Key="backgroundSelectionTemplate" DockPanel="{ Binding DockPanel }">
+          <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+
+              <ListBox x:Name="backgroundCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableBackgrounds}" SelectedItem="{Binding SelectedBackground}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle x:Name="backgroundIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource BackgroundIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
+                                <Setter TargetName="backgroundIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
+                                <Setter TargetName="backgroundIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
+                                <Setter TargetName="backgroundIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
+                                <Setter TargetName="backgroundIcon" Property="Opacity" Value="0.8"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <TextBlock ls:TextBlockFormatter.SourceText="{Binding DummyCharacter.Stats.BackgroundDescription}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
+        </StackPanel>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="backgroundProgressionsTemplate">
+
+        <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
+            <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
+
+                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=BackgroundProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=BackgroundProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+                <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.BackgroundProgression}" HorizontalAlignment="Center"/>
+
+            </StackPanel>
+        </ScrollViewer>
+    </ControlTemplate>
+</ResourceDictionary>

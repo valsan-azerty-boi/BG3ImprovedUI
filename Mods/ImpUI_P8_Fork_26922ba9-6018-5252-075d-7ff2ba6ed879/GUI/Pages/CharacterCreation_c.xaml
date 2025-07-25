@@ -23,9 +23,16 @@
     <ls:UIWidget.Resources>
         <ResourceDictionary>
 
-            <!-- <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Library/CCLib_c.xaml"/>
-            </ResourceDictionary.MergedDictionaries> -->
+            <ResourceDictionary.MergedDictionaries>
+              <ResourceDictionary Source="../Library/CCLib_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_RaceControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_SubRaceControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_ClassControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_SubClassControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_DeityControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_BackgroundControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_AbilityControls_c.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
             <!-- Message box to ensure user wants to activate tutorials -->
             <ls:LSMessageBoxData x:Key="MessageBoxTutorialsCheck"
@@ -1092,48 +1099,10 @@
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
                                                     <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
-
-                                                        <ListBox x:Name="raceCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableRaces}" SelectedItem="{Binding SelectedRace}">
-                                                            <ListBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <Rectangle x:Name="raceIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource RaceIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}" Opacity="1"/>
-                                                                    <DataTemplate.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                            <Setter TargetName="raceIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Opacity" Value="0.8"/>
-                                                                        </DataTrigger>
-                                                                    </DataTemplate.Triggers>
-                                                                </DataTemplate>
-                                                            </ListBox.ItemTemplate>
-                                                        </ListBox>
-
-                                                        <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding InfoRaceDescription}" Style="{StaticResource CarouselSideDescriptionText}"/>
-                                                        </ContentControl>
-
+                                                        <Control Template="{StaticResource raceSelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                    <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-
-                                                    <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                                                        <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=RaceProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RaceProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=RaceSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=RaceSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <!-- MOD START - Racial passive selection -->
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=RacePassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=RacePassiveSelectors}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RacePassiveSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-                                                            <!-- MOD END -->
-
-                                                            <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.RaceProgression}" HorizontalAlignment="Center"/>
-
-                                                        </StackPanel>
-
-                                                    </ScrollViewer>
+                                                    <Control Template="{StaticResource raceProgressionsTemplate}"/>
 
                                                 </DockPanel>
                                             </ControlTemplate>
@@ -1154,48 +1123,11 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <StackPanel x:Name="subraceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
-
-                                                        <ListBox x:Name="subraceCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableSubRaces}" SelectedItem="{Binding SelectedSubRace}">
-                                                            <ListBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <Rectangle x:Name="raceIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource RaceIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                                                                    <DataTemplate.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                            <Setter TargetName="raceIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Opacity" Value="0.8"/>
-                                                                        </DataTrigger>
-                                                                    </DataTemplate.Triggers>
-                                                                </DataTemplate>
-                                                            </ListBox.ItemTemplate>
-                                                        </ListBox>
-
-                                                        <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding DummyCharacter.Stats.Race.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-                                                        </ContentControl>
-
+                                                    <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                                                      <Control Template="{StaticResource subRaceSelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                    <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-
-                                                    <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                                                        <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRaceProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRaceProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRaceSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=SubRaceSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <!-- MOD START - Racial passive selection -->
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveSelectors}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRacePassiveSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-                                                            <!-- MOD END -->
-
-                                                            <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubRaceProgression}" HorizontalAlignment="Center"/>
-
-                                                        </StackPanel>
-                                                    </ScrollViewer>
+                                                    <Control Template="{StaticResource subRaceProgressionsTemplate}"/>
 
                                                 </DockPanel>
 
@@ -1218,50 +1150,10 @@
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
                                                     <StackPanel x:Name="classCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
-
-                                                        <ListBox x:Name="classCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableClasses}" SelectedItem="{Binding SelectedClass}">
-                                                            <ListBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <Image x:Name="classIcon" Style="{StaticResource ClassIconStyle}" Stretch="None" Opacity="1" />
-
-                                                                    <DataTemplate.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                            <Setter TargetName="classIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="classIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="classIcon" Property="Stretch" Value="Uniform"/>
-                                                                            <Setter TargetName="classIcon" Property="Opacity" Value="0.9"/>
-                                                                            <Setter TargetName="classIcon" Property="Effect">
-                                                                                <Setter.Value>
-                                                                                    <ls:SaturationEffect Saturation="0.6"/>
-                                                                                </Setter.Value>
-                                                                            </Setter>
-                                                                        </DataTrigger>
-                                                                    </DataTemplate.Triggers>
-                                                                </DataTemplate>
-                                                            </ListBox.ItemTemplate>
-                                                        </ListBox>
-
-                                                        <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,70,0,0">
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedClass.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-                                                        </ContentControl>
-
+                                                      <Control Template="{StaticResource classSelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                    <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top" />
-
-                                                    <ScrollViewer x:Name="scrollBar" Style="{StaticResource gameplayPanelScrollViewerStyle}" ls:ScrollViewerHelper.VerticalScrollOffsetMargin="124">
-                                                        <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=ClassSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=ClassSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=ClassProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=ClassProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=ClassPassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=ClassPassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.ClassProgression}" HorizontalAlignment="Center"/>
-
-                                                        </StackPanel>
-                                                    </ScrollViewer>
+                                                    <Control Template="{StaticResource classProgressionsTemplate}"/>
 
                                                 </DockPanel>
                                             </ControlTemplate>
@@ -1281,53 +1173,10 @@
                                                     </b:Interaction.Triggers>
 
                                                     <StackPanel x:Name="subclassCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
-
-                                                        <ListBox x:Name="subclassCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableSubClasses}" SelectedItem="{Binding SelectedSubClass}">
-                                                            <ListBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <Image x:Name="classIcon" Style="{StaticResource ClassIconStyle}" Stretch="None"/>
-                                                                    <DataTemplate.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                            <Setter TargetName="classIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="classIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="classIcon" Property="Stretch" Value="Uniform"/>
-                                                                            <Setter TargetName="classIcon" Property="Opacity" Value="0.9"/>
-                                                                            <Setter TargetName="classIcon" Property="Effect">
-                                                                                <Setter.Value>
-                                                                                    <ls:SaturationEffect Saturation="0.6"/>
-                                                                                </Setter.Value>
-                                                                            </Setter>
-                                                                        </DataTrigger>
-                                                                    </DataTemplate.Triggers>
-                                                                </DataTemplate>
-                                                            </ListBox.ItemTemplate>
-                                                        </ListBox>
-
-                                                        <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubClass.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-                                                        </ContentControl>
-
+                                                      <Control Template="{StaticResource subClassSelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                    <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
-
-                                                        <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-
-                                                        <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                                                            <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-
-                                                                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassPassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassPassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                                <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubClassProgression}" HorizontalAlignment="Center"/>
-
-                                                            </StackPanel>
-                                                        </ScrollViewer>
-
-                                                    </StackPanel>
+                                                    <Control Template="{StaticResource subClassProgressionsTemplate}"/>
 
                                                 </DockPanel>
 
@@ -1349,29 +1198,8 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                                                        <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                                                    <Control Template="{StaticResource deitySelectionTemplate}"/>
 
-                                                            <ListBox x:Name="deityCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableDeities}" SelectedItem="{Binding SelectedDeity}">
-                                                                <ListBox.ItemTemplate>
-                                                                    <DataTemplate>
-                                                                        <Rectangle x:Name="deityIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource DeityIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                                                                        <DataTemplate.Triggers>
-                                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                                <Setter TargetName="deityIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                                <Setter TargetName="deityIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                                <Setter TargetName="deityIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                                                                <Setter TargetName="deityIcon" Property="Opacity" Value="0.8"/>
-                                                                            </DataTrigger>
-                                                                        </DataTemplate.Triggers>
-                                                                    </DataTemplate>
-                                                                </ListBox.ItemTemplate>
-                                                            </ListBox>
-
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
-
-                                                        </StackPanel>
-                                                    </ScrollViewer>
                                                 </StackPanel>
 
                                             </ControlTemplate>
@@ -1399,7 +1227,7 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <StackPanel>
+                                              <DockPanel>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
@@ -1408,36 +1236,13 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <ListBox x:Name="backgroundCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableBackgrounds}" SelectedItem="{Binding SelectedBackground}">
-                                                        <ListBox.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Rectangle x:Name="backgroundIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource BackgroundIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                                                                <DataTemplate.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                        <Setter TargetName="backgroundIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                        <Setter TargetName="backgroundIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                        <Setter TargetName="backgroundIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                                                        <Setter TargetName="backgroundIcon" Property="Opacity" Value="0.8"/>
-                                                                    </DataTrigger>
-                                                                </DataTemplate.Triggers>
-                                                            </DataTemplate>
-                                                        </ListBox.ItemTemplate>
-                                                    </ListBox>
+                                                    <StackPanel x:Name="backgroundCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                                                        <Control Template="{StaticResource backgroundSelectionTemplate}"/>
+                                                    </StackPanel>
 
-                                                    <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                                                        <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                                                    <Control Template="{StaticResource backgroundProgressionsTemplate}"/>
 
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding DummyCharacter.Stats.BackgroundDescription}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
-
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
-
-                                                            <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.BackgroundProgression}" HorizontalAlignment="Center"/>
-
-                                                        </StackPanel>
-                                                    </ScrollViewer>
-
-                                                </StackPanel>
-
+                                                </DockPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
@@ -1447,138 +1252,22 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <Grid>
-
                                                     <DockPanel VerticalAlignment="Top">
                                                         <b:Interaction.Triggers>
                                                             <b:EventTrigger EventName="Loaded">
                                                                 <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                                                             </b:EventTrigger>
                                                         </b:Interaction.Triggers>
-
                                                         <Control Template="{StaticResource setGameplayCameraOffsets}"/>
+                                                        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Source='h711b5e8bgb67bg43f7gac08g36b2e2466acd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
+                                                            <TextBlock Text="{Binding Source='hf135a2ddg8e74g44b6gb899ga96c2410d384', Converter={StaticResource TranslatedStringConverter}}"  Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,0,0,0"/>
+                                                            <TextBlock Text="{Binding Source='h0e1cbf9ege86fg4bebgb6e6g34aae0ab4460', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,20,0,0"/>
+                                                        </StackPanel>
 
-                                                        <TextBlock DockPanel.Dock="Top" ls:TextBlockFormatter.SourceText="{Binding Source='h711b5e8bgb67bg43f7gac08g36b2e2466acd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
-
-                                                        <TextBlock DockPanel.Dock="Top"  ls:TextBlockFormatter.SourceText="{Binding Source='hf135a2ddg8e74g44b6gb899ga96c2410d384', Converter={StaticResource TranslatedStringConverter}}"  Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,0,0,0"/>
-
-                                                        <TextBlock DockPanel.Dock="Top"  ls:TextBlockFormatter.SourceText="{Binding Source='h0e1cbf9ege86fg4bebgb6e6g34aae0ab4460', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,20,0,0"/>
-
-                                                        <ScrollViewer x:Name="scrollBar" Style="{StaticResource gameplayPanelScrollViewerStyle}" ls:ScrollViewerHelper.VerticalScrollOffsetMargin="124">
-                                                            <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-                                                            
-                                                                <ItemsControl ItemsSource="{Binding RaceProgressionDetails.AbilityBonusSelection}" Margin="0,24,0,0">
-                                                                    <ItemsControl.ItemTemplate>
-                                                                        <DataTemplate>
-                                                                            <ContentControl Template="{StaticResource CarouselButtonTemplate}" Tag="notEnabled" x:Name="base" ls:MoveFocus.Focusable="True" Focusable="True">
-                                                                                <Grid VerticalAlignment="Center" Margin="50,0,50,0">
-
-                                                                                    <TextBlock x:Name="bonus" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextNormal}" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                                                        <TextBlock.Text>
-                                                                                            <MultiBinding Converter="{StaticResource ParameterizedTranslatedStringConverter}">
-                                                                                                <Binding Source="hcb0e1e92ga5eeg4823g8e03gee3c7bdf9b58"/>
-                                                                                                <Binding Path="AbilityBonus"/>
-                                                                                            </MultiBinding>
-                                                                                        </TextBlock.Text>
-                                                                                    </TextBlock>
-
-                                                                                    <ListBox x:Name="abilityBonuses" ItemsSource="{Binding BonusAbilities}" SelectedIndex="{Binding SelectedIndex}">
-
-                                                                                        <ListBox.Template>
-                                                                                            <ControlTemplate>
-                                                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-
-                                                                                                    <ls:LSButton x:Name="leftBtn" BoundEvent="UILeft" Command="{Binding DataContext.SelectPrevAbilityBonus, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" SoundID="{DynamicResource CarouselButtonSoundEvent}" Style="{StaticResource IconCarouselButtonStyle}" VerticalAlignment="Bottom">
-                                                                                                        <ls:LSButton.RenderTransform>
-                                                                                                            <ScaleTransform ScaleX="-1" CenterX="32"/>
-                                                                                                        </ls:LSButton.RenderTransform>
-                                                                                                    </ls:LSButton>
-
-                                                                                                    <Grid VerticalAlignment="Center" MinWidth="400">
-
-                                                                                                        <Control Template="{StaticResource AbilityDisplayName}" DataContext="{Binding SelectedItem, ElementName=abilityBonuses}" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextPrimary}" HorizontalAlignment="Center"/>
-
-                                                                                                    </Grid>
-
-                                                                                                    <ls:LSButton x:Name="rightBtn" BoundEvent="UIRight" Command="{Binding DataContext.SelectNextAbilityBonus, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" SoundID="{DynamicResource CarouselButtonSoundEvent}" Style="{StaticResource IconCarouselButtonStyle}" VerticalAlignment="Center"/>
-
-                                                                                                </StackPanel>
-                                                                                            </ControlTemplate>
-                                                                                        </ListBox.Template>
-                                                                                    </ListBox>
-                                                                                </Grid>
-
-                                                                            </ContentControl>
-                                                                        </DataTemplate>
-                                                                    </ItemsControl.ItemTemplate>
-                                                                </ItemsControl>
-
-                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,24,0,0">
-                                                                    <TextBlock x:Name="AssignAbilityPointsTitle" ls:TextBlockFormatter.SourceText="{Binding Source='h72161eb0g8981g45cfgba63ga76e152e1fe9', Converter={StaticResource TranslatedStringConverter}}" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextNormal}"/>
-                                                                    <TextBlock x:Name="AssignAbilityPointsValue" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextPrimary}" Margin="20,0,0,0">
-                                                    <Run Text="{Binding UsedAbilityPoints}"/><Run Text="{Binding TotalAbilityPoints, StringFormat='/{0}'}"/>
-                                                                    </TextBlock>
-                                                                </StackPanel>
-
-                                                                <ItemsControl x:Name="abilities" ItemsSource="{Binding DummyCharacter.Stats.Abilities}" ItemTemplate="{StaticResource changeAbilityTemplate}" Margin="0,20,0,0">
-                                                                    <ItemsControl.Resources>
-                                                                        <ControlTemplate x:Key="buttonsAndValue">
-                                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="400,0,0,0">
-                                                                                <ls:LSButton x:Name="leftBtn" BoundEvent="UILeft" IsEnabled="{Binding CanDecrease}" Command="{Binding DataContext.DecreaseAbility, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" Style="{StaticResource IconCarouselButtonStyle}" VerticalAlignment="Bottom" SoundID="UI_HUD_CC_DecreaseAbility">
-                                                                                    <ls:LSButton.RenderTransform>
-                                                                                        <ScaleTransform ScaleX="-1" CenterX="32"/>
-                                                                                    </ls:LSButton.RenderTransform>
-                                                                                </ls:LSButton>
-
-                                                                                <Grid VerticalAlignment="Center" MinWidth="80">
-                                                                                    <TextBlock x:Name="value" ls:TextBlockFormatter.SourceText="{Binding Value}" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextPrimary}" HorizontalAlignment="Center"/>
-                                                                                </Grid>
-
-                                                                                <ls:LSButton x:Name="rightBtn" BoundEvent="UIRight" IsEnabled="{Binding CanIncrease}" Command="{Binding DataContext.IncreaseAbility, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" Style="{StaticResource IconCarouselButtonStyle}" VerticalAlignment="Bottom" SoundID="UI_HUD_CC_IncreaseAbility"/>
-                                                                            </StackPanel>
-                                                                        </ControlTemplate>
-                                                                    </ItemsControl.Resources>
-                                                                </ItemsControl>
-
-                                                                <!-- Add Use Recommended as a button -->
-                                                                <ContentControl Template="{StaticResource InteractiveListButtonTemplate}" x:Name="base" ls:MoveFocus.Focusable="True" Focusable="True" IsEnabled="{Binding CanUseRecommendedAbilities}" Margin="0,24,0,0">
-                                                                    <Grid>
-
-                                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                                            
-                                                                            <TextBlock x:Name="useRecommendedText" Text="{Binding Source='h44d84d6fg14d8g4606gb563gf458f155defa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource CarouselText}" FontSize="{StaticResource DefaultFontSize}" Margin="0,1,0,0"/>
-                                                                        </StackPanel>
-
-                                                                        <ls:LSInputBinding IsEnabled="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" BoundEvent="UIAccept">
-                                                                            <b:Interaction.Triggers>
-                                                                                <b:EventTrigger EventName="LSInputBindingReleased">
-                                                                                    <b:InvokeCommandAction Command="{Binding DataContext.UseRecommendedAbilities, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="new"/>
-                                                                                    <ls:SetMoveFocusAction TargetName="CharacterCreation_c" FocusElement="{Binding ElementName=abilities}"/>
-                                                                                </b:EventTrigger>
-                                                                            </b:Interaction.Triggers>
-                                                                        </ls:LSInputBinding>
-
-                                                                    </Grid>
-                                                                </ContentControl>
-
-                                                            </StackPanel>
-                                                        </ScrollViewer>
+                                                          <Control Template="{StaticResource abilitySelectionTemplate}"/>
 
                                                     </DockPanel>
-                                                </Grid>
-
-                                                <ControlTemplate.Triggers>
-                                                    <DataTrigger Binding="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" Value="True">
-                                                        <Setter TargetName="useRecommendedText" Property="Foreground" Value="{StaticResource LS_selectedTextPad}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding CanUseRecommendedAbilities}" Value="False">
-                                                        <Setter TargetName="useRecommendedText" Property="Opacity" Value="{StaticResource DisabledOpacity}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding UnusedAbilityPoints, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" Value="True">
-                                                        <Setter TargetName="AssignAbilityPointsTitle" Property="Foreground" Value="{StaticResource CCTabToDo}"/>
-                                                        <Setter TargetName="AssignAbilityPointsValue" Property="Foreground" Value="{StaticResource CCTabToDo}"/>
-                                                    </DataTrigger>
-                                                </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
