@@ -1,0 +1,63 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+					xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+					xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					xmlns:System="clr-namespace:System;assembly=mscorlib"
+					xmlns:ls="clr-namespace:ls;assembly=Code"
+					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
+					mc:Ignorable="d">
+
+      <ControlTemplate x:Key="classSelectionTemplate" DockPanel="{ Binding DockPanel }">
+
+        <StackPanel x:Name="classCarouselAndDescription_inner" Orientation="Horizontal" DockPanel.Dock="Top">
+
+            <ListBox x:Name="classCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableClasses}" SelectedItem="{Binding SelectedClass}">
+              <ListBox.ItemTemplate>
+                  <DataTemplate>
+                      <Image x:Name="classIcon" Style="{StaticResource ClassIconStyle}" Stretch="None" Opacity="1" />
+
+                      <DataTemplate.Triggers>
+                          <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
+                              <Setter TargetName="classIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
+                              <Setter TargetName="classIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
+                              <Setter TargetName="classIcon" Property="Stretch" Value="Uniform"/>
+                              <Setter TargetName="classIcon" Property="Opacity" Value="0.9"/>
+                              <Setter TargetName="classIcon" Property="Effect">
+                                  <Setter.Value>
+                                      <ls:SaturationEffect Saturation="0.6"/>
+                                  </Setter.Value>
+                              </Setter>
+                          </DataTrigger>
+                      </DataTemplate.Triggers>
+                  </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,70,0,0">
+              <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedClass.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
+          </ContentControl>
+
+        </StackPanel>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="classProgressionsTemplate">
+
+        <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+
+        <ScrollViewer x:Name="scrollBar" Style="{StaticResource gameplayPanelScrollViewerStyle}" ls:ScrollViewerHelper.VerticalScrollOffsetMargin="124">
+          <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+
+              <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=ClassSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=ClassSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+              <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=ClassProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=ClassProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+              <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=ClassPassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=ClassPassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
+
+              <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.ClassProgression}" HorizontalAlignment="Center"/>
+
+          </StackPanel>
+      </ScrollViewer>
+
+    </ControlTemplate>
+</ResourceDictionary>
