@@ -31,6 +31,7 @@
               <ResourceDictionary Source="../Library/CC_SubClassControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_DeityControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_BackgroundControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_AbilityControls_c.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Message box to ensure user wants to activate tutorials -->
@@ -1251,138 +1252,22 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <Grid>
-
                                                     <DockPanel VerticalAlignment="Top">
                                                         <b:Interaction.Triggers>
                                                             <b:EventTrigger EventName="Loaded">
                                                                 <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                                                             </b:EventTrigger>
                                                         </b:Interaction.Triggers>
-
                                                         <Control Template="{StaticResource setGameplayCameraOffsets}"/>
+                                                        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Source='h711b5e8bgb67bg43f7gac08g36b2e2466acd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
+                                                            <TextBlock Text="{Binding Source='hf135a2ddg8e74g44b6gb899ga96c2410d384', Converter={StaticResource TranslatedStringConverter}}"  Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,0,0,0"/>
+                                                            <TextBlock Text="{Binding Source='h0e1cbf9ege86fg4bebgb6e6g34aae0ab4460', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,20,0,0"/>
+                                                        </StackPanel>
 
-                                                        <TextBlock DockPanel.Dock="Top" ls:TextBlockFormatter.SourceText="{Binding Source='h711b5e8bgb67bg43f7gac08g36b2e2466acd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
-
-                                                        <TextBlock DockPanel.Dock="Top"  ls:TextBlockFormatter.SourceText="{Binding Source='hf135a2ddg8e74g44b6gb899ga96c2410d384', Converter={StaticResource TranslatedStringConverter}}"  Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,0,0,0"/>
-
-                                                        <TextBlock DockPanel.Dock="Top"  ls:TextBlockFormatter.SourceText="{Binding Source='h0e1cbf9ege86fg4bebgb6e6g34aae0ab4460', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,20,0,0"/>
-
-                                                        <ScrollViewer x:Name="scrollBar" Style="{StaticResource gameplayPanelScrollViewerStyle}" ls:ScrollViewerHelper.VerticalScrollOffsetMargin="124">
-                                                            <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-                                                            
-                                                                <ItemsControl ItemsSource="{Binding RaceProgressionDetails.AbilityBonusSelection}" Margin="0,24,0,0">
-                                                                    <ItemsControl.ItemTemplate>
-                                                                        <DataTemplate>
-                                                                            <ContentControl Template="{StaticResource CarouselButtonTemplate}" Tag="notEnabled" x:Name="base" ls:MoveFocus.Focusable="True" Focusable="True">
-                                                                                <Grid VerticalAlignment="Center" Margin="50,0,50,0">
-
-                                                                                    <TextBlock x:Name="bonus" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextNormal}" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                                                        <TextBlock.Text>
-                                                                                            <MultiBinding Converter="{StaticResource ParameterizedTranslatedStringConverter}">
-                                                                                                <Binding Source="hcb0e1e92ga5eeg4823g8e03gee3c7bdf9b58"/>
-                                                                                                <Binding Path="AbilityBonus"/>
-                                                                                            </MultiBinding>
-                                                                                        </TextBlock.Text>
-                                                                                    </TextBlock>
-
-                                                                                    <ListBox x:Name="abilityBonuses" ItemsSource="{Binding BonusAbilities}" SelectedIndex="{Binding SelectedIndex}">
-
-                                                                                        <ListBox.Template>
-                                                                                            <ControlTemplate>
-                                                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-
-                                                                                                    <ls:LSButton x:Name="leftBtn" BoundEvent="UILeft" Command="{Binding DataContext.SelectPrevAbilityBonus, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" SoundID="{DynamicResource CarouselButtonSoundEvent}" Style="{StaticResource IconCarouselButtonStyle}" VerticalAlignment="Bottom">
-                                                                                                        <ls:LSButton.RenderTransform>
-                                                                                                            <ScaleTransform ScaleX="-1" CenterX="32"/>
-                                                                                                        </ls:LSButton.RenderTransform>
-                                                                                                    </ls:LSButton>
-
-                                                                                                    <Grid VerticalAlignment="Center" MinWidth="400">
-
-                                                                                                        <Control Template="{StaticResource AbilityDisplayName}" DataContext="{Binding SelectedItem, ElementName=abilityBonuses}" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextPrimary}" HorizontalAlignment="Center"/>
-
-                                                                                                    </Grid>
-
-                                                                                                    <ls:LSButton x:Name="rightBtn" BoundEvent="UIRight" Command="{Binding DataContext.SelectNextAbilityBonus, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" SoundID="{DynamicResource CarouselButtonSoundEvent}" Style="{StaticResource IconCarouselButtonStyle}" VerticalAlignment="Center"/>
-
-                                                                                                </StackPanel>
-                                                                                            </ControlTemplate>
-                                                                                        </ListBox.Template>
-                                                                                    </ListBox>
-                                                                                </Grid>
-
-                                                                            </ContentControl>
-                                                                        </DataTemplate>
-                                                                    </ItemsControl.ItemTemplate>
-                                                                </ItemsControl>
-
-                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,24,0,0">
-                                                                    <TextBlock x:Name="AssignAbilityPointsTitle" ls:TextBlockFormatter.SourceText="{Binding Source='h72161eb0g8981g45cfgba63ga76e152e1fe9', Converter={StaticResource TranslatedStringConverter}}" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextNormal}"/>
-                                                                    <TextBlock x:Name="AssignAbilityPointsValue" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextPrimary}" Margin="20,0,0,0">
-                                                    <Run Text="{Binding UsedAbilityPoints}"/><Run Text="{Binding TotalAbilityPoints, StringFormat='/{0}'}"/>
-                                                                    </TextBlock>
-                                                                </StackPanel>
-
-                                                                <ItemsControl x:Name="abilities" ItemsSource="{Binding DummyCharacter.Stats.Abilities}" ItemTemplate="{StaticResource changeAbilityTemplate}" Margin="0,20,0,0">
-                                                                    <ItemsControl.Resources>
-                                                                        <ControlTemplate x:Key="buttonsAndValue">
-                                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="400,0,0,0">
-                                                                                <ls:LSButton x:Name="leftBtn" BoundEvent="UILeft" IsEnabled="{Binding CanDecrease}" Command="{Binding DataContext.DecreaseAbility, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" Style="{StaticResource IconCarouselButtonStyle}" VerticalAlignment="Bottom" SoundID="UI_HUD_CC_DecreaseAbility">
-                                                                                    <ls:LSButton.RenderTransform>
-                                                                                        <ScaleTransform ScaleX="-1" CenterX="32"/>
-                                                                                    </ls:LSButton.RenderTransform>
-                                                                                </ls:LSButton>
-
-                                                                                <Grid VerticalAlignment="Center" MinWidth="80">
-                                                                                    <TextBlock x:Name="value" ls:TextBlockFormatter.SourceText="{Binding Value}" FontSize="{StaticResource ScaledDefaultFontSize}" Foreground="{StaticResource CCTextPrimary}" HorizontalAlignment="Center"/>
-                                                                                </Grid>
-
-                                                                                <ls:LSButton x:Name="rightBtn" BoundEvent="UIRight" IsEnabled="{Binding CanIncrease}" Command="{Binding DataContext.IncreaseAbility, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" Style="{StaticResource IconCarouselButtonStyle}" VerticalAlignment="Bottom" SoundID="UI_HUD_CC_IncreaseAbility"/>
-                                                                            </StackPanel>
-                                                                        </ControlTemplate>
-                                                                    </ItemsControl.Resources>
-                                                                </ItemsControl>
-
-                                                                <!-- Add Use Recommended as a button -->
-                                                                <ContentControl Template="{StaticResource InteractiveListButtonTemplate}" x:Name="base" ls:MoveFocus.Focusable="True" Focusable="True" IsEnabled="{Binding CanUseRecommendedAbilities}" Margin="0,24,0,0">
-                                                                    <Grid>
-
-                                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                                            
-                                                                            <TextBlock x:Name="useRecommendedText" Text="{Binding Source='h44d84d6fg14d8g4606gb563gf458f155defa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource CarouselText}" FontSize="{StaticResource DefaultFontSize}" Margin="0,1,0,0"/>
-                                                                        </StackPanel>
-
-                                                                        <ls:LSInputBinding IsEnabled="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" BoundEvent="UIAccept">
-                                                                            <b:Interaction.Triggers>
-                                                                                <b:EventTrigger EventName="LSInputBindingReleased">
-                                                                                    <b:InvokeCommandAction Command="{Binding DataContext.UseRecommendedAbilities, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="new"/>
-                                                                                    <ls:SetMoveFocusAction TargetName="CharacterCreation_c" FocusElement="{Binding ElementName=abilities}"/>
-                                                                                </b:EventTrigger>
-                                                                            </b:Interaction.Triggers>
-                                                                        </ls:LSInputBinding>
-
-                                                                    </Grid>
-                                                                </ContentControl>
-
-                                                            </StackPanel>
-                                                        </ScrollViewer>
+                                                          <Control Template="{StaticResource abilitySelectionTemplate}"/>
 
                                                     </DockPanel>
-                                                </Grid>
-
-                                                <ControlTemplate.Triggers>
-                                                    <DataTrigger Binding="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" Value="True">
-                                                        <Setter TargetName="useRecommendedText" Property="Foreground" Value="{StaticResource LS_selectedTextPad}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding CanUseRecommendedAbilities}" Value="False">
-                                                        <Setter TargetName="useRecommendedText" Property="Opacity" Value="{StaticResource DisabledOpacity}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding UnusedAbilityPoints, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" Value="True">
-                                                        <Setter TargetName="AssignAbilityPointsTitle" Property="Foreground" Value="{StaticResource CCTabToDo}"/>
-                                                        <Setter TargetName="AssignAbilityPointsValue" Property="Foreground" Value="{StaticResource CCTabToDo}"/>
-                                                    </DataTrigger>
-                                                </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
