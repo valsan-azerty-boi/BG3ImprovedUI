@@ -1122,8 +1122,6 @@
                                                       <Control Template="{StaticResource subRaceSelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                    <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-
                                                     <Control Template="{StaticResource subRaceProgressionsTemplate}"/>
 
                                                 </DockPanel>
