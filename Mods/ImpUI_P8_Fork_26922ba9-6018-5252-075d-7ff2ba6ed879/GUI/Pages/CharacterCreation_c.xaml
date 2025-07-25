@@ -26,6 +26,7 @@
             <ResourceDictionary.MergedDictionaries>
               <ResourceDictionary Source="../Library/CCLib_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_RaceControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_SubRaceControls_c.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Message box to ensure user wants to activate tutorials -->
@@ -1117,48 +1118,13 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <StackPanel x:Name="subraceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
-
-                                                        <ListBox x:Name="subraceCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableSubRaces}" SelectedItem="{Binding SelectedSubRace}">
-                                                            <ListBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <Rectangle x:Name="raceIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource RaceIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                                                                    <DataTemplate.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                                                            <Setter TargetName="raceIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                                                            <Setter TargetName="raceIcon" Property="Opacity" Value="0.8"/>
-                                                                        </DataTrigger>
-                                                                    </DataTemplate.Triggers>
-                                                                </DataTemplate>
-                                                            </ListBox.ItemTemplate>
-                                                        </ListBox>
-
-                                                        <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
-                                                            <TextBlock ls:TextBlockFormatter.SourceText="{Binding DummyCharacter.Stats.Race.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-                                                        </ContentControl>
-
+                                                    <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                                                      <Control Template="{StaticResource subRaceSelectionTemplate}"/>
                                                     </StackPanel>
 
                                                     <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
 
-                                                    <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                                                        <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRaceProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRaceProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRaceSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=SubRaceSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                                                            <!-- MOD START - Racial passive selection -->
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
-                                                            <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveSelectors}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRacePassiveSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-                                                            <!-- MOD END -->
-
-                                                            <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubRaceProgression}" HorizontalAlignment="Center"/>
-
-                                                        </StackPanel>
-                                                    </ScrollViewer>
+                                                    <Control Template="{StaticResource subRaceProgressionsTemplate}"/>
 
                                                 </DockPanel>
 
