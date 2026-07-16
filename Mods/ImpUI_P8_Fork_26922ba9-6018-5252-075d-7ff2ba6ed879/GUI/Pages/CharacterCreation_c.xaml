@@ -1308,7 +1308,7 @@
                                                         </ContentControl>
 
                                                     </StackPanel>
-
+                                                    <!-- MOD START - Deleted the horizontal stack panel (by NellsRelo) -->
                                                         <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
 
                                                         <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
@@ -1324,7 +1324,7 @@
 
                                                             </StackPanel>
                                                         </ScrollViewer>
-
+                                                    <!-- MOD END -->
                                                 </DockPanel>
 
                                             </ControlTemplate>
