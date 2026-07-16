@@ -7,3 +7,7 @@ The original ImpUI mod was made by [Djmr](https://github.com/TheRealDjmr), Alana
 ImpUI_P8_Fork is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.
 
 ImpUI_P8_Fork is a mod for Baldur's Gate 3, a game developed and published by Larian Studios. This mod is not affiliated with, endorsed by, or approved by Larian Studios. Baldur’s Gate 3 and all related assets, trademarks, and copyrights are the property of Larian Studios.
+
+# Development tips
+- Use `reloadUIs` command in Toolkit console (F11) to reload the entire UI
+- Base BG3 Larian UI files are in `Game.pak` / `Patch8_HotFix8.pak`
