@@ -147,14 +147,14 @@
                                     </ListBoxItem.Resources>
                                 </ListBoxItem>
 
-                                <!-- TODO: keep it? -->
+                                <!-- MOD START - TODO: keep it? -->
                                 <ListBoxItem x:Name="backgroundTab" Tag="background">
                                     <ListBoxItem.Resources>
                                         <BitmapImage x:Key="tabIcon" UriSource="pack://application:,,,/Core;component/Assets/CC/ico_origin.png"/>
                                         <BitmapImage x:Key="tabIconHover" UriSource="pack://application:,,,/Core;component/Assets/CC/ico_origin_h.png"/>
                                     </ListBoxItem.Resources>
                                 </ListBoxItem>
-                                <!-- TODO: keep it? -->
+                                <!-- MOD END -->
 
                                 <ListBoxItem x:Name="abilityTab" Tag="ability">
                                     <ListBoxItem.Resources>
@@ -193,7 +193,9 @@
                         Navigation Flow from blank state
                         -->
                         <DataTrigger Binding="{Binding SelectedClass}" Value="{x:Null}">
+                            <!-- MOD START - already a modded thing or was deleted by larian in patch 8 hotfix? -->
                             <Setter TargetName="raceTab" Property="IsEnabled" Value="False"/>
+                            <!-- MOD END -->
                             <Setter TargetName="abilityTab" Property="IsEnabled" Value="False"/>
                         </DataTrigger>
                         <MultiDataTrigger>

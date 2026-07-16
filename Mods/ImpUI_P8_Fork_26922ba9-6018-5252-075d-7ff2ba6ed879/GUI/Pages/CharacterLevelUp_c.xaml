@@ -670,7 +670,9 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding FilteredItems.Count, ElementName=SubRaceProgressions, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" Value="True">
                                 <Setter TargetName="raceTab" Property="Visibility" Value="Visible"/>
+                                <!-- MOD START - subrace mod, deleted by larian in patch 8 hotfix or was it already a modded thing ? -->
                                 <Setter TargetName="subRaceTab" Property="Visibility" Value="Visible"/>
+                                <!-- MOD END -->
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ProgressionData.RaceProgression.Other.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" Value="True">
                                 <Setter TargetName="raceTab" Property="Visibility" Value="Visible"/>

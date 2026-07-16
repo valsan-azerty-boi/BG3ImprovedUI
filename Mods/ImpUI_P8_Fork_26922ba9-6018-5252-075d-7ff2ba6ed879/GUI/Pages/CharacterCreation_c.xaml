@@ -347,7 +347,9 @@
                                     <Grid x:Name="tabNavigation" Tag="None">
                                         <b:Interaction.Triggers>
                                             <b:DataTrigger Binding="{Binding Tag, ElementName=tabNavigation}" Value="GoBack">
+                                                <!-- MOD START - New Larian deletion in Hotfix for patch 8 or was it a already modded thing ? -->
                                                 <b:InvokeCommandAction Command="{Binding SetupGameplayTabNavigation}" CommandParameter="{Binding ElementName=gameplayTabs}"/>
+                                                <!-- MOD END -->
                                                 <b:ChangePropertyAction TargetName="tabNavigation" PropertyName="Tag" Value="None" />
                                             </b:DataTrigger>
                                         </b:Interaction.Triggers>
@@ -592,11 +594,11 @@
                                                     </ListBox.ItemContainerStyle>
 
                                                     <b:Interaction.Triggers>
-                                                        
+                                                        <!-- MOD START - New Larian deletion in Hotfix for patch 8  or was it a already modded thing ? -->
                                                         <b:DataTrigger Binding="{Binding ElementName=gamePlayPage, Path=IsVisible}" Value="True">
                                                             <b:InvokeCommandAction Command="{Binding SetupGameplayTabNavigation}" CommandParameter="{Binding ElementName=gameplayTabs}"/>
                                                         </b:DataTrigger>
-
+                                                        <!-- MOD END -->
                                                         <!-- Only set if not in a subtab -->
                                                         <b:EventTrigger EventName="SelectionChanged">
                                                             <b:Interaction.Behaviors>
@@ -674,7 +676,9 @@
                                                     <b:EventTrigger EventName="Click">
                                                         <b:ChangePropertyAction TargetName="gameplayTabs" PropertyName="SelectedIndex" Value="{Binding Tag, ElementName=tabBar}" />
                                                         <b:ChangePropertyAction TargetName="tabBar" PropertyName="Tag" Value="CanJumpToAppearance" />
+                                                        <!-- MOD START - New Larian deletion in Hotfix for patch 8 or was it a already modded thing ? -->
                                                         <b:InvokeCommandAction Command="{Binding SetupGameplayTabNavigation}" CommandParameter="{Binding ElementName=gameplayTabs}"/>
+                                                        <!-- MOD END -->
                                                     </b:EventTrigger>
                                                 </b:Interaction.Triggers>
                                             </ls:LSButton>
@@ -804,7 +808,7 @@
 
                                     <Setter TargetName="bottomButtonsHolder" Property="Margin" Value="0,0,90,56"/>
                                 </DataTrigger>
-
+                                <!-- MOD START - New Larian deletion in patch 8 hotfix or was it a already modded thing ? -->
                                 <!-- Animated Tabs Backplate Width matching -->
                                 <DataTrigger Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="race">
                                     <Setter TargetName="backplate" Property="Width">
@@ -850,7 +854,7 @@
                                         </Setter.Value>
                                     </Setter>
                                 </DataTrigger>
-
+                                <!-- MOD END -->
                                 <DataTrigger Binding="{Binding Tag, ElementName=tabBar}" Value="CanJumpToAppearance">
                                     <Setter TargetName="backFromAppearanceButton" Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
@@ -1309,6 +1313,8 @@
 
                                                     </StackPanel>
                                                     <!-- MOD START - Deleted the horizontal stack panel (by NellsRelo) -->
+                                                    <!-- <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left"> -->
+
                                                         <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
 
                                                         <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
@@ -1324,6 +1330,8 @@
 
                                                             </StackPanel>
                                                         </ScrollViewer>
+
+                                                    <!-- </StackPanel> -->
                                                     <!-- MOD END -->
                                                 </DockPanel>
 

@@ -1,0 +1,141 @@
+<!-- Was this file existing before patch 8 hotfix (2025-2026 ?) -->
+<ls:UIWidget  x:Name="CharacterFullRespec"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ls="clr-namespace:ls;assembly=Code"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    mc:Ignorable="d"
+    d:DesignHeight="2160" d:DesignWidth="3840"
+    ls:UIWidget.ContextName="CharacterFullRespec"
+    ls:TooltipExtender.Owner="{Binding DummyCharacter}">
+
+    <b:Interaction.Behaviors>
+
+        <ls:CollectionFilterBehavior x:Name="SubClassProgressions" ItemsSource="{Binding ClassProgressionDetails.Progressions}" Predicate="{Binding IsSubProgressionPredicate}"/>
+
+        <ls:CollectionFilterBehavior x:Name="SubClassSpellSelectors" ItemsSource="{Binding ClassProgressionDetails.SpellSelectors}" Predicate="{Binding IsSubProgressionPredicate}"/>
+
+        <ls:CollectionFilterBehavior x:Name="SubClassPassiveFeatures" ItemsSource="{Binding PassiveFeatures}" Predicate="{Binding IsSubProgressionPredicate}"/>
+
+        <ls:CollectionSortBehavior x:Name="SortedSummarySkills" ItemsSource="{Binding ProgressionData.AllProgressions.Skills}" Comparer="{Binding SkillSortComparer}" />
+        
+        <ls:CollectionSortBehavior x:Name="SortedPreparableSpells" ItemsSource="{Binding SpellPrepare.Preparable}" Comparer="{Binding SpellByLevelSortComparer}" />
+        <ls:CollectionSortBehavior x:Name="SortedPreparableSpellGroupsByLevel" ItemsSource="{Binding SpellPrepare.PreparableByLevel}" Comparer="{Binding SpellGroupByLevelSortComparer}" />
+        
+    </b:Interaction.Behaviors>
+
+    <ls:UIWidget.ContentTemplate>
+        <DataTemplate>
+
+            <Grid x:Name="fullRespec" IsEnabled="{Binding IsLocked, Converter={StaticResource InvertBoolConverter}}">
+                
+                <Control Template="{StaticResource setOverviewCamera}"/>
+
+                <Grid HorizontalAlignment="Left">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/Core;component/Assets/CC/vignette_left.png"/>
+                    </Grid.Background>
+
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,62,0,0">
+
+                        <Image x:Name="bg" Source="pack://application:,,,/Core;component/Assets/CC/contentPane.png" Stretch="None"/>
+
+                        <Control x:Name="gameplayPanel"/>
+
+                    </Grid>
+
+                    <!-- Tabs -->
+                    <ListBox x:Name="gameplayTabs" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,176,0,0">
+                        <b:Interaction.Behaviors>
+                            <ls:SubListBoxBehavior x:Name="SubListBoxHelper"  RootListBox="{Binding ElementName=gameplayTabs}" />
+                        </b:Interaction.Behaviors>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template" Value="{StaticResource gameplayTabTemplate}"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                        <ListBoxItem x:Name="subClassTab" Tag="subclass" IsSelected="True">
+                            <ListBoxItem.Resources>
+                                <BitmapImage x:Key="tabIcon" UriSource="pack://application:,,,/Core;component/Assets/CC/ico_class.png"/>
+                                <BitmapImage x:Key="tabIconHover" UriSource="pack://application:,,,/Core;component/Assets/CC/ico_class_h.png"/>
+                            </ListBoxItem.Resources>
+                        </ListBoxItem>
+
+                        <ListBoxItem x:Name="spellPrepTab" Tag="spellprep" Visibility="Collapsed">
+                            <ListBoxItem.Resources>
+                                <BitmapImage x:Key="tabIcon" UriSource="pack://application:,,,/Core;component/Assets/CC/ico_class.png"/>
+                                <BitmapImage x:Key="tabIconHover" UriSource="pack://application:,,,/Core;component/Assets/CC/ico_class_h.png"/>
+                            </ListBoxItem.Resources>
+                        </ListBoxItem>
+
+                    </ListBox>
+
+                </Grid>
+
+                <Control x:Name="summaryControls" Template="{StaticResource summaryPanelTemplate}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,150,20,0"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1040,50">
+
+                    <Control Template="{StaticResource cameraModeControlsTemplate}"/>
+
+                    <Grid x:Name="finishFullRespec">
+                        <Grid.Resources>
+                            <BitmapImage x:Key="ButtonBackground" UriSource="pack://application:,,,/Core;component/Assets/CC/btnAppearance_bg.png"/>
+                        </Grid.Resources>                        
+                        <Image Source="{StaticResource ButtonBackground}" Stretch="None"/>
+
+                        <ls:LSButton Content="{Binding Source='ha7867654g6f71g41ccgbd0bgba956a682293', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource CCNextButtonStyle}" IsEnabled="{Binding IsRespecComplete}" Command="{Binding FinishRespec}" OverwriteClickSound="UI_HUD_TriggerLevelUp" />
+                    </Grid>
+
+                    <Control Template="{StaticResource rotateDummyControlsTemplate}"/>
+
+                </StackPanel>
+
+                <b:Interaction.Triggers>
+                    <b:DataTrigger Binding="{Binding Path=IsVisible, ElementName=fullRespec}" Value="True">
+                        <ls:LSPlaySound  Sound="UI_HUD_TriggerLevelUp"/>
+                    </b:DataTrigger>
+                </b:Interaction.Triggers>
+
+            </Grid>
+
+            <DataTemplate.Triggers>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding SpellPrepare.MustPrepareSpells}" Value="True"/>
+                        <Condition Binding="{Binding SpellPrepare.Prepared.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter TargetName="spellPrepTab" Property="Visibility" Value="Visible"/>
+                </MultiDataTrigger>
+
+                <!--
+                Gameplay Panel Content 
+                -->
+ 
+                <DataTrigger Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="subclass">
+
+                    <Setter TargetName="gameplayPanel" Property="Template" Value="{StaticResource levelUpSubClassTemplate}"/>
+
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="spellprep">
+                    
+                    <Setter TargetName="gameplayPanel" Property="Template" Value="{StaticResource spellPrepTemplate}"/>
+
+                </DataTrigger>
+
+
+            </DataTemplate.Triggers>
+
+
+        </DataTemplate>
+    </ls:UIWidget.ContentTemplate>
+
+</ls:UIWidget>
