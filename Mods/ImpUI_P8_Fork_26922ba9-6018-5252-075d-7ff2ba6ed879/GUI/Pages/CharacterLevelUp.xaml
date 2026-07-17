@@ -481,14 +481,16 @@
                         <Setter TargetName="subRaceTab" Property="Visibility" Value="Visible"/>
                     </DataTrigger>
                     <!-- MOD END -->
-                    <!-- TODO: useful ? -->
+                    <!-- MOD START - TODO: useful ? -->
                     <DataTrigger Binding="{Binding FilteredItems.Count, ElementName=RaceProgressions, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" Value="True">
                         <Setter TargetName="raceTab" Property="Visibility" Value="Visible"/>
                     </DataTrigger>
-                    <!-- TODO: useful ? END -->
+                    <!-- MOD END -->
                     <DataTrigger Binding="{Binding FilteredItems.Count, ElementName=SubRaceProgressions, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" Value="True">
                         <Setter TargetName="raceTab" Property="Visibility" Value="Visible"/>
+                        <!-- MOD START - Deleted by larian in patch 8 hotfix or was it already a modded thing ? -->
                         <Setter TargetName="subRaceTab" Property="Visibility" Value="Visible"/>
+                        <!-- MOD END -->
                     </DataTrigger>
                     <DataTrigger Binding="{Binding ProgressionData.RaceProgression.Other.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" Value="True">
                         <Setter TargetName="raceTab" Property="Visibility" Value="Visible"/>
@@ -905,8 +907,14 @@ ConverterParameter=0}" Value="True"/>
                                                     </ListBoxItem>
 
                                                     <ListBoxItem Visibility="{Binding AllSkills.ExpertiseSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}" Template="{StaticResource levelUpListBoxItemTemplate}">
+                                                    <!-- MOD START - edit skills when given by proficiency and expertise (Leftover ImpUI patch 7)-->
+                                                    <!-- <ListBoxItem x:Name="featureSkills" Visibility="Collapsed" Template="{StaticResource levelUpListBoxItemTemplate}"> -->
+                                                    <!-- MOD END -->
                                                         <!-- Skill Proficiency and Expertise -->
                                                         <ContentControl Template="{StaticResource NewItemStripTemplate}" Visibility="{Binding AllSkills.ExpertiseSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}" Margin="0,0,0,50">
+                                                        <!-- MOD START - edit skills when given by proficiency and expertise (Leftover ImpUI patch 7)-->
+                                                        <!-- <ContentControl Template="{StaticResource NewItemStripTemplate}" Margin="0,0,0,50"> -->
+                                                        <!-- MOD END -->
                                                             <Grid>
                                                                 <StackPanel HorizontalAlignment="Stretch">
                                                                     <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source=h12abe296ga0fbg44feg9451gb10a0bf92acb, Converter={StaticResource TranslatedStringConverter}}" HorizontalAlignment="Center"/>

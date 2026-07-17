@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="../Library/CCLib_k.xaml"/>
             </ResourceDictionary.MergedDictionaries> -->
 
+            <!-- MOD START - Hide tutorial popup (put in comment to hide) -->
             <!-- Message box to ensure user wants to activate tutorials -->
             <ls:LSMessageBoxData x:Key="MessageBoxTutorialsCheck"
                                  Text="{Binding Source='h86f06e64g4588g4798gb828gf6e0268122af', Converter={StaticResource TranslatedStringConverter}}"
@@ -32,16 +33,34 @@
                                           BoundEvent="UIAccept"/>
                 </ls:LSMessageBoxData.Actions>
             </ls:LSMessageBoxData>
+            <!-- MOD END -->
 
+            <!-- MOD START - Patch 7 ImpUI leftover -->
+            <!-- <ControlTemplate x:Key="IUI_MultiplayerToggleButtonTemplate" TargetType="{x:Type ls:LSToggleButton}">
+                <Grid Background="Transparent">
+                    <Image x:Name="bg" Source="{StaticResource BtnNormal}" Stretch="None"/>
+                    <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h908649e6gdfe9g4a44g8bf3ga66cc295f28e', Converter={StaticResource TranslatedStringConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Source" Value="{StaticResource BtnNormal_h}" TargetName="bg"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Source" Value="{StaticResource BtnNormal_p}" TargetName="bg"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate> -->
+            <!-- MOD END -->
         </ResourceDictionary>
     </ls:UIWidget.Resources>
 
+    <!-- MOD START - Hide tutorial popup (put in comment to hide) -->
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:InvokeCommandAction Command="{Binding OpenShowTutorialsQuestion}" CommandParameter="{StaticResource MessageBoxTutorialsCheck}"/>
         </b:EventTrigger>
     </b:Interaction.Triggers>
-
+    <!-- MOD END -->
     <b:Interaction.Behaviors>
         <ls:CollectionFilterBehavior x:Name="CustomOriginsCollection" ItemsSource="{Binding SelectableOrigins}" Predicate="{Binding IsCustomOriginPredicate}"/>
         <ls:CollectionFilterBehavior x:Name="PresetOriginsCollection" ItemsSource="{Binding SelectableOrigins}" Predicate="{Binding IsNotCustomOriginPredicate}"/>
@@ -55,9 +74,10 @@
         <ls:CollectionFilterBehavior x:Name="SubRaceSpellSelectors" ItemsSource="{Binding RaceProgressionDetails.SpellSelectors}" Predicate="{Binding IsSubProgressionPredicate}"/>
         <ls:CollectionFilterBehavior x:Name="ClassSpellSelectors" ItemsSource="{Binding ClassProgressionDetails.SpellSelectors}" Predicate="{Binding IsNotSubProgressionPredicate}"/>
         <ls:CollectionFilterBehavior x:Name="SubClassSpellSelectors" ItemsSource="{Binding ClassProgressionDetails.SpellSelectors}" Predicate="{Binding IsSubProgressionPredicate}"/>
-
+        <!-- MOD START - Racial passive selection -->
         <ls:CollectionFilterBehavior x:Name="RacePassiveFeatures" ItemsSource="{Binding RacePassiveFeatures}" Predicate="{Binding IsNotSubProgressionPredicate}"/>
         <ls:CollectionFilterBehavior x:Name="SubRacePassiveFeatures" ItemsSource="{Binding RacePassiveFeatures}" Predicate="{Binding IsSubProgressionPredicate}"/>
+        <!-- MOD END -->
         <ls:CollectionFilterBehavior x:Name="ClassPassiveFeatures" ItemsSource="{Binding PassiveFeatures}" Predicate="{Binding IsNotSubProgressionPredicate}"/>
         <ls:CollectionFilterBehavior x:Name="SubClassPassiveFeatures" ItemsSource="{Binding PassiveFeatures}" Predicate="{Binding IsSubProgressionPredicate}"/>
 
@@ -443,7 +463,8 @@
                                             </ContentControl>
 
                                             <!-- Origins -->
-                                            <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" Height="Auto" MaxHeight="640" VerticalScrollBarVisibility="Auto" Margin="100,20,88,0">
+                                            <!-- MOD START - Add scroll viewers to support multiple modded origin selection -->
+                                            <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" Height="Auto" MaxHeight="760" VerticalScrollBarVisibility="Auto" Margin="100,20,88,0">
                                                 <ListBox x:Name="presetOrigins" ItemsPanel="{StaticResource gameplayItemsPanelTemplate}" ItemTemplate="{StaticResource OriginPortraitTemplate}" ItemsSource="{Binding FilteredItems, ElementName=PresetOriginsCollection}" SelectedItem="{Binding SelectedOrigin}" Style="{StaticResource gameplayIconGridStyle}">
                                                     <ListBox.ItemContainerStyle>
                                                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource CCIconTextListBoxItemStyle}">
@@ -462,7 +483,7 @@
                                                 </ListBox>
                                             </ls:LSScrollViewer>
 
-                                            <!-- Origin Details -->
+                                            <!-- MOD NOTE - This is just in case of some very long description -->
                                             <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" Height="Auto" MaxHeight="500" VerticalScrollBarVisibility="Auto" Margin="100,20,88,0">
                                                 <StackPanel x:Name="presetSelectionDetails">
                                                     <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedOrigin.Name}" FontSize="{StaticResource BigFontSize}" HorizontalAlignment="Center"/>
@@ -487,7 +508,7 @@
                                                     </ls:LSButton>
                                                 </StackPanel>
                                             </ls:LSScrollViewer>
-
+                                            <!-- MOD END -->
                                         </StackPanel>
                                         <ControlTemplate.Triggers>
                                             <DataTrigger Binding="{Binding SelectedOrigin}" Value="{x:Null}">
@@ -516,6 +537,7 @@
                                             <Image Style="{StaticResource PanelHeaderIconStyle}"/>
                                             <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source=h6020727bge0e3g4de7gaf3ag469c3b32b3d2, Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
 
+                                            <!-- MOD START - Two scroll viewers to support multiple modded race selection -->
                                             <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" MaxHeight="770" Height="Auto" VerticalScrollBarVisibility="Auto">
 
                                                 <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
@@ -538,7 +560,9 @@
 
                                                     <ItemsControl x:Name="featureSpells" ItemsSource="{Binding FilteredItems, ElementName=RaceProgressions}" ItemTemplate="{StaticResource ProgressionSpellsTemplate}"/>
 
+                                                    <!-- MOD START - Note: Race passive features in CC preview -->
                                                     <ItemsControl x:Name="racePassives" ItemsSource="{Binding FilteredItems, ElementName=RacePassiveFeatures}" ItemTemplate="{StaticResource ProgressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}" Margin="0,20,0,0"/>
+                                                    <!-- MOD END -->
 
                                                     <ContentControl Template="{DynamicResource ShowFeaturesTemplate}" DataContext="{Binding ProgressionData.RaceProgression.Other}" Content="{Binding Source='hd0d992ebg43f8g429bgbf11g0cbf54d84d4e', Converter={StaticResource TranslatedStringConverter}}" Visibility="{Binding Count, Converter={StaticResource CountToVisibilityConverter}}" HorizontalAlignment="Center" Margin="0,20,0,0"/>
 
@@ -556,11 +580,22 @@
                             <Setter TargetName="gameplayPanel" Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
+                                        <!-- MOD START - (Grid part is modded) Two scroll viewers to support multiple modded subrace selection -->
                                         <StackPanel x:Name="subracePanel">
+                                        <!-- <Grid x:Name="subracePanel" Height="1750" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions> -->
                                             <Image Style="{StaticResource PanelHeaderIconStyle}"/>
                                             <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source=h29d1d637g94bbg4f11g9bdfgbe0042b60e40, Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
+                                            <!-- <Image Grid.Row="0" Style="{StaticResource PanelHeaderIconStyle}"/>
+                                            <TextBlock Grid.Row="1" ls:TextBlockFormatter.SourceText="{Binding Source=h29d1d637g94bbg4f11g9bdfgbe0042b60e40, Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/> -->
 
                                             <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" MaxHeight="770" Height="Auto" VerticalScrollBarVisibility="Auto">
+                                            <!-- <ls:LSScrollViewer Grid.Row="2" Style="{StaticResource gameplayPanelScrollViewerStyle}" MaxHeight="770" Height="Auto" VerticalScrollBarVisibility="Auto"> -->
                                                 <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
 
                                                     <ListBox x:Name="subraceListBox" ItemTemplate="{StaticResource CustomIconTemplate}" ItemsSource="{Binding SelectableSubRaces}" SelectedItem="{Binding SelectedSubRace}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
@@ -573,6 +608,7 @@
                                             </ls:LSScrollViewer>
 
                                             <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" MaxHeight="830" Height="Auto" VerticalScrollBarVisibility="Auto">
+                                            <!-- <ls:LSScrollViewer Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource gameplayPanelScrollViewerStyle}" Height="Auto" VerticalScrollBarVisibility="Auto"> -->
                                                 <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">                                                    
                                                     
                                                     <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubRace.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center" Margin="0,20,0,0"/>
@@ -582,6 +618,7 @@
 
                                                     <ItemsControl x:Name="featureSpells" ItemsSource="{Binding FilteredItems, ElementName=SubRaceProgressions}" ItemTemplate="{StaticResource ProgressionSpellsTemplate}"/>
 
+                                                    <!-- MOD NOTE - Subrace passive features in CC preview -->
                                                     <ItemsControl x:Name="subRacePassives" ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveFeatures}" ItemTemplate="{StaticResource ProgressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}" Margin="0,20,0,0"/>
 
                                                     <ContentControl Template="{DynamicResource ShowFeaturesTemplate}" DataContext="{Binding ProgressionData.SubRaceProgression.Other}" Content="{Binding Source='hb4961bdbg618bg4350g8bdbg89221f97b659', Converter={StaticResource TranslatedStringConverter}}" Visibility="{Binding Count, Converter={StaticResource CountToVisibilityConverter}}" HorizontalAlignment="Center" Margin="0,20,0,0"/>
@@ -590,6 +627,8 @@
 
                                             </ls:LSScrollViewer>
                                         </StackPanel>
+                                        <!-- </Grid> -->
+                                        <!-- MOD END -->
 
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -628,6 +667,7 @@
                                             <Image Source="{StaticResource IconClass}" Stretch="None" Margin="0,64,0,0"/>
                                             <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source=h1d2631e2g78fdg4de2gadceg1a724c2f7d9b, Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
 
+                                            <!-- MOD START - Two scroll viewers to support multiple background selection -->
                                             <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" MaxHeight="770" Height="Auto" VerticalScrollBarVisibility="Auto">
                                                 <ListBox x:Name="backgroundListBox" ItemTemplate="{StaticResource CustomIconTemplate}" ItemsSource="{Binding SelectableBackgrounds}" SelectedItem="{Binding SelectedBackground}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
                                                     <ListBox.Resources>
@@ -636,6 +676,7 @@
                                                 </ListBox>
                                             </ls:LSScrollViewer>
 
+                                            <!-- This is just in case of some really long description-->
                                             <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="770" Height="Auto">
                                                 <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
                                                     <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedBackground.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center" Margin="0,20,0,0"/>
@@ -643,6 +684,7 @@
                                                     <Control Template="{StaticResource progressionInfo}" DataContext="{Binding ProgressionData.BackgroundProgression}" HorizontalAlignment="Center" Margin="0,50,0,0"/>
                                                 </StackPanel>
                                             </ls:LSScrollViewer>
+                                            <!-- MOD END -->
 
                                         </StackPanel>
                                     </ControlTemplate>
@@ -1233,6 +1275,12 @@
         </ls:LSButton>
 
         <Control x:Name="multiplayer" Template="{StaticResource MultiplayerPanelTemplate}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,20"/>
+        <!-- MOD START - Leftover ImpUi patch 7 -->
+        <!-- <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Control x:Name="multiplayer" Template="{StaticResource MultiplayerPanelTemplate}" Margin="20,0,0,20" Visibility="{Binding Path=IsChecked, ElementName=IUI_MultiplayerToggleButton, Converter={StaticResource BoolToVisibleConverter}}"/>
+            <ls:LSToggleButton x:Name="IUI_MultiplayerToggleButton" Template="{StaticResource IUI_MultiplayerToggleButtonTemplate}" IsChecked="False" VerticalAlignment="Bottom" SoundID="UI_HUD_CC_OpenCloseToggle"/>
+        </StackPanel> -->
+        <!-- MOD END -->
 
     </Grid>
 
