@@ -907,8 +907,14 @@ ConverterParameter=0}" Value="True"/>
                                                     </ListBoxItem>
 
                                                     <ListBoxItem Visibility="{Binding AllSkills.ExpertiseSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}" Template="{StaticResource levelUpListBoxItemTemplate}">
+                                                    <!-- MOD START - edit skills when given by proficiency and expertise (Leftover ImpUI patch 7)-->
+                                                    <!-- <ListBoxItem x:Name="featureSkills" Visibility="Collapsed" Template="{StaticResource levelUpListBoxItemTemplate}"> -->
+                                                    <!-- MOD END -->
                                                         <!-- Skill Proficiency and Expertise -->
                                                         <ContentControl Template="{StaticResource NewItemStripTemplate}" Visibility="{Binding AllSkills.ExpertiseSkills.MaxSelectedSkillCount, Converter={StaticResource CountToVisibilityConverter}}" Margin="0,0,0,50">
+                                                        <!-- MOD START - edit skills when given by proficiency and expertise (Leftover ImpUI patch 7)-->
+                                                        <!-- <ContentControl Template="{StaticResource NewItemStripTemplate}" Margin="0,0,0,50"> -->
+                                                        <!-- MOD END -->
                                                             <Grid>
                                                                 <StackPanel HorizontalAlignment="Stretch">
                                                                     <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source=h12abe296ga0fbg44feg9451gb10a0bf92acb, Converter={StaticResource TranslatedStringConverter}}" HorizontalAlignment="Center"/>
