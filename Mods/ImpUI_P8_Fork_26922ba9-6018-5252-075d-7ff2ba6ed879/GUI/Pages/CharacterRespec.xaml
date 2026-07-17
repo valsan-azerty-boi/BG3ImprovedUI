@@ -581,7 +581,7 @@
 
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                                                     <StackPanel.Resources>
-	                                                    <Style TargetType="ls:LSButton" BasedOn="{StaticResource CCButtonStyle}"/>
+                                                        <Style TargetType="ls:LSButton" BasedOn="{StaticResource CCButtonStyle}"/>
                                                     </StackPanel.Resources>
 
                                                     <ls:LSButton Content="{Binding Source='h0bb0adf7g2b3ag4094gba80gf78d6a5337df', Converter={StaticResource TranslatedStringConverter}}" Command="{Binding ResetAbilities}" IsEnabled="{Binding CanResetAbilities}"/>
