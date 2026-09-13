@@ -24,17 +24,19 @@
                     <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source=hdd1cb010g6baag43e5g92a0ga68099423f90, Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
 
                     <!-- Origins -->
-                    <ListBox x:Name="presetOrigins" ItemsPanel="{StaticResource gameplayItemsPanelTemplate}" ItemTemplate="{StaticResource OriginPortraitTemplate}" ItemsSource="{Binding FilteredItems, ElementName=PresetOriginsCollection}" SelectedItem="{Binding SelectedOrigin}" Margin="0,120,0,0">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource CCIconTextListBoxItemStyle}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsSelectable}" Value="False">
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
+                    <ls:LSScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" Height="Auto" MaxHeight="1170" VerticalScrollBarVisibility="Auto">
+                        <ListBox x:Name="presetOrigins" Style="{StaticResource gameplayIconGridStyle}" ItemTemplate="{StaticResource OriginPortraitTemplate}" ItemsSource="{Binding FilteredItems, ElementName=PresetOriginsCollection}" SelectedItem="{Binding SelectedOrigin}" Margin="0,120,0,0">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource CCIconTextListBoxItemStyle}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelectable}" Value="False">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                    </ls:LSScrollViewer>
 
                     <StackPanel x:Name="presetSelectionDetails">
                         <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedOrigin.Name}" FontSize="{StaticResource BigFontSize}" HorizontalAlignment="Center" Margin="0,50,0,0"/>
